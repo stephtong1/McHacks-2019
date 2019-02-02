@@ -4,6 +4,7 @@ import { Camera, Permissions } from 'expo';
 import axios from 'axios';
 import { ViewPagerAndroid, DrawerLayoutAndroid, } from 'react-native-gesture-handler';
 import { SQLite } from 'expo'
+import { white } from 'ansi-colors';
 
 const db = SQLite.openDatabase('db.db')
 
@@ -47,7 +48,7 @@ export default class UseCamera extends React.Component{
     ratio: this.setAppropriateRatio(),
     identifedAs: '',
     loading: false,
-    languageCode: 'zh',
+    languageCode: 'en',
   };
 
   // ###########################STORAGE########################################################
@@ -207,14 +208,10 @@ async identifyImage(imageData){
         <Text style={{ margin: 10, fontSize: 15, textAlign: 'left' }}>
           Language menu
         </Text>
-        <Text style={{ margin: 10, fontSize: 15, textAlign: 'left'}}>
-          Hey!
-        </Text>
-        {/* <Button 
-          onPress={this.changeLanguage("fr")}
-            title="Snap!"
-            color="#841584"
-        /> */}
+        <TouchableOpacity onPress={() => { this.changeLanguage('en') }}><Text style={styles.p}>Boston Tea Party</Text></TouchableOpacity>
+        <TouchableOpacity onPress={() => { this.changeLanguage('fr') }}><Text style={styles.p}>Baguette</Text></TouchableOpacity>
+        <TouchableOpacity onPress={() => { this.changeLanguage('de') }}><Text style={styles.p}>Mein Kampf</Text></TouchableOpacity>
+        <TouchableOpacity onPress={() => { this.changeLanguage('zh') }}><Text style={styles.p}>Rice</Text></TouchableOpacity>
       </View>
     );
     //End Drawer views
@@ -241,19 +238,13 @@ async identifyImage(imageData){
  
             <View style={{flex:1, flexDirection:'column', justifyContent:'center',}}>
               
-              {/* <ScrollView style={styles.container}>
-                  <View style={styles.languageBar}>
-                      <TouchableOpacity onPress={() => { this.changeLanguage('en') }}><Text style={styles.p}>English</Text></TouchableOpacity>
-                      <TouchableOpacity onPress={() => { this.changeLanguage('fr') }}><Text style={styles.p}>French</Text></TouchableOpacity>
-                      <TouchableOpacity onPress={() => { this.changeLanguage('ru') }}><Text style={styles.p}>Russian</Text></TouchableOpacity>
-                      <TouchableOpacity onPress={() => { this.changeLanguage('de') }}><Text style={styles.p}>German</Text></TouchableOpacity>
-                  </View>
-                </ScrollView> */} 
               <Camera style={{flex:1}} type={this.state.type} ratio={this.state.ratio} ref={ref => { this.camera = ref; }}  >
                 
                 <View style={{flex:1, flexDirection: 'column',justifyContent: 'space-evenly', alignItems: 'stretch',}}>
 
-                  <Text style= {{ fontSize: 40, flexDirection: "row", textAlign: 'center', backgroundColor: !!this.state.identifedAs ? 'rgba(85, 87, 91, 0.1)' : 'rgba(0,0,0,0)'}}>
+                  <Text style= {{ fontSize: 40, flexDirection: "row", textAlign: 'center', 
+                    backgroundColor: !!this.state.identifedAs ? 'rgba(85, 87, 91, 0.1)' : 'rgba(0,0,0,0)',
+                    textShadowColor: 'rgba(255, 255, 255, 1)', textShadowOffset: {width: -1, height: 1}, textShadowRadius: 10}}>
                     {this.state.identifedAs}
                     </Text>
 
