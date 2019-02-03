@@ -22,7 +22,7 @@ export default class UseCamera extends React.Component{
     hasCameraPermission: null,
     direction: Camera.Constants.Type.back,
     ratio: this.setAppropriateRatio(),
-    identifedAs: 'wadksodjlsak',
+    identifedAs: '',
     loading: false,
     languageCode: 'en',
   };
@@ -187,13 +187,13 @@ async identifyImage(imageData){
 
     const rightNavigationView = (
       <View style={{ flex: 1, backgroundColor: '#fff' }}>
-        <Text style={{ margin: 10, fontSize: 25, textAlign: 'left' }}>
+        <Text style={{ margin: 10, marginTop: 100, fontSize: 23, textAlign: 'left' }}>
           Language menu
         </Text>
-        <TouchableOpacity onPress={() => { this.changeLanguage('en') }}><Text style={styles.p}>Boston Tea Party</Text></TouchableOpacity>
-        <TouchableOpacity onPress={() => { this.changeLanguage('fr') }}><Text style={styles.p}>Baguette</Text></TouchableOpacity>
-        <TouchableOpacity onPress={() => { this.changeLanguage('de') }}><Text style={styles.p}>Mein Kampf</Text></TouchableOpacity>
-        <TouchableOpacity onPress={() => { this.changeLanguage('zh') }}><Text style={styles.p}>Rice</Text></TouchableOpacity>
+        <TouchableOpacity onPress={() => { this.changeLanguage('en') }}><Text style={styles.p}>English</Text></TouchableOpacity>
+        <TouchableOpacity onPress={() => { this.changeLanguage('fr') }}><Text style={styles.p}>French</Text></TouchableOpacity>
+        <TouchableOpacity onPress={() => { this.changeLanguage('de') }}><Text style={styles.p}>German</Text></TouchableOpacity>
+        <TouchableOpacity onPress={() => { this.changeLanguage('zh') }}><Text style={styles.p}>Chinese</Text></TouchableOpacity>
       </View>
     );
     //End Drawer views
@@ -245,9 +245,6 @@ async identifyImage(imageData){
   }
 }
 
-// skip this line if using Create React Native App
-AppRegistry.registerComponent('AwesomeProject', () => JustifyContentBasics);
-
 const styles =  {
   container: {
       padding: 40,
@@ -255,7 +252,8 @@ const styles =  {
   },
   p: {
       color: '#828280',
-      lineHeight: 24
+      lineHeight: 24,
+      margin: 10
   },
   languageBar: {
       flexDirection: 'row',
@@ -265,7 +263,3 @@ const styles =  {
     backgroundColor: '#FAFAFA',
   }
 }
-
-
-// skip this line if using Create React Native App
-AppRegistry.registerComponent('AwesomeProject', () => JustifyContentBasics);
