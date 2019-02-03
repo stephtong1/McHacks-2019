@@ -89,16 +89,12 @@ export default class UseCamera extends React.Component{
     languageCode: 'en',
     open: false,
     words: [""],
-<<<<<<< Updated upstream
     quotes: [
       "Monkeys", 
       "Chimps",
       "Kai25"
     ],
-=======
-    quotes: [""],
     open:false,
->>>>>>> Stashed changes
   };
 
   // ###########################STORAGE########################################################
