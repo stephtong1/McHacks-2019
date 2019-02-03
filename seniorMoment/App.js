@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
-import { AppRegistry, View, Dimensions, Button, Text, ScrollView, TouchableOpacity, Platform, StyleSheet } from 'react-native';
+import React from 'react';
+import { AppRegistry, View, Dimensions, Button, Text, TouchableOpacity } from 'react-native';
 import { Camera, Permissions } from 'expo';
 import axios from 'axios';
-import { ViewPagerAndroid, DrawerLayoutAndroid, } from 'react-native-gesture-handler';
+import { DrawerLayoutAndroid, } from 'react-native-gesture-handler';
 import { SQLite } from 'expo'
-import { white } from 'ansi-colors';
 
-const db = SQLite.openDatabase('db.db')
+const db = SQLite.openDatabase('myow.db')
 
 // ############################################################################################
 //                                          API KEYS
@@ -170,7 +169,6 @@ async identifyImage(imageData){
         q: temp_word, //this.state.identifedAs 
         target: this.state.languageCode //this.state.languageCode
         })
-      // console.log(JSON.stringify(response))
       console.log(response.data.data.translations[0].translatedText)
       console.log(response.data.data.translations[0].detectedSourceLanguage)
       this.setState((prevState, props) => ({
@@ -200,13 +198,13 @@ async identifyImage(imageData){
 
     const rightNavigationView = (
       <View style={{ flex: 1, backgroundColor: '#fff' }}>
-        <Text style={{ margin: 10, fontSize: 15, textAlign: 'left' }}>
+        <Text style={{ margin: 10, marginTop: 100, fontSize: 23, textAlign: 'left' }}>
           Language menu
         </Text>
-        <TouchableOpacity onPress={() => { this.changeLanguage('en') }}><Text style={styles.p}>Boston Tea Party</Text></TouchableOpacity>
-        <TouchableOpacity onPress={() => { this.changeLanguage('fr') }}><Text style={styles.p}>Baguette</Text></TouchableOpacity>
-        <TouchableOpacity onPress={() => { this.changeLanguage('de') }}><Text style={styles.p}>Mein Kampf</Text></TouchableOpacity>
-        <TouchableOpacity onPress={() => { this.changeLanguage('zh') }}><Text style={styles.p}>Rice</Text></TouchableOpacity>
+        <TouchableOpacity onPress={() => { this.changeLanguage('en') }}><Text style={styles.p}>English</Text></TouchableOpacity>
+        <TouchableOpacity onPress={() => { this.changeLanguage('fr') }}><Text style={styles.p}>French</Text></TouchableOpacity>
+        <TouchableOpacity onPress={() => { this.changeLanguage('de') }}><Text style={styles.p}>German</Text></TouchableOpacity>
+        <TouchableOpacity onPress={() => { this.changeLanguage('zh') }}><Text style={styles.p}>Chinese</Text></TouchableOpacity>
       </View>
     );
     //End Drawer views
@@ -217,6 +215,7 @@ async identifyImage(imageData){
           <Text>Loading</Text>
         </View>
       );
+      // return <Text>Asking camera permission</Text>;
     } else if (hasCameraPermission === false) {
       return <Text>No access to camera</Text>;
     } else {
@@ -242,10 +241,6 @@ async identifyImage(imageData){
                     textShadowColor: 'rgba(255, 255, 255, 1)', textShadowOffset: {width: -1, height: 1}, textShadowRadius: 10}}>
                     {this.state.identifedAs}
                     </Text>
-
-                {/* Here is the place we insert the random floaty words */}
-                {/* </View> */}
-                {/* <View }} }}> */}
                 
                 </View>
                 <View style={{flex:1 , flexDirection: 'column', justifyContent: 'flex-end',}}>
@@ -266,9 +261,6 @@ async identifyImage(imageData){
   }
 }
 
-// skip this line if using Create React Native App
-AppRegistry.registerComponent('AwesomeProject', () => JustifyContentBasics);
-
 const styles =  {
   container: {
       padding: 40,
@@ -276,7 +268,8 @@ const styles =  {
   },
   p: {
       color: '#828280',
-      lineHeight: 24
+      lineHeight: 24,
+      margin: 10
   },
   languageBar: {
       flexDirection: 'row',
@@ -286,7 +279,3 @@ const styles =  {
     backgroundColor: '#FAFAFA',
   }
 }
-
-
-// skip this line if using Create React Native App
-AppRegistry.registerComponent('AwesomeProject', () => JustifyContentBasics);
