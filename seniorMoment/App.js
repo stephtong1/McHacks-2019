@@ -187,7 +187,8 @@ async identifyImage(imageData){
 
     const rightNavigationView = (
       <View style={{ flex: 1, backgroundColor: '#fff' }}>
-        <Text style={{ margin: 10, marginTop: 100, fontSize: 23, textAlign: 'left' }}>
+        <Text style={{ margin: 10, marginTop: 100, fontSize: 23, textAlign: 'left', 
+          backgroundColor: 'rgb(111, 207, 226)', color: 'rgb(255, 255, 255)'}}>
           Language menu
         </Text>
         <TouchableOpacity onPress={() => { this.changeLanguage('en') }}><Text style={styles.p}>English</Text></TouchableOpacity>
