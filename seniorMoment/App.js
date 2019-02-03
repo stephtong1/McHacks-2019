@@ -6,7 +6,7 @@ import { ViewPagerAndroid, DrawerLayoutAndroid, } from 'react-native-gesture-han
 import { SQLite } from 'expo'
 import { white } from 'ansi-colors';
 
-const db = SQLite.openDatabase('db.db')
+const db = SQLite.openDatabase('myow.db')
 
 class LoadingScreen extends Component {
   render() {
@@ -46,7 +46,7 @@ export default class UseCamera extends React.Component{
     hasCameraPermission: null,
     direction: Camera.Constants.Type.back,
     ratio: this.setAppropriateRatio(),
-    identifedAs: '',
+    identifedAs: 'wadksodjlsak',
     loading: false,
     languageCode: 'en',
   };
@@ -59,32 +59,46 @@ export default class UseCamera extends React.Component{
 
   //each time app is opened. it has a list of activated quotes in that same active frame.
   // let
-
   componentDidMount() {
     db.transaction(tx => {
       tx.executeSql(
-        'create table if not exists items (id integer primary key not null, quote TEXT);'
+        'create table if not exists items (id integer  primary key not null, value text);'
         //'drop table items'
       )
     })
   }
 
-  saveQuote() {
-   db.transaction(
+
+  saveQuote(){
+    db.transaction(
       tx => {
         tx.executeSql(
-          'insert into items (quote) values (?)',
+          'insert into items (value) values (?)',
           [
-            "waddup"
+            this.state.identifedAs
           ]
         )
-        tx.executeSql('select * from items', [], (_, (_)).then(response =>
-          console.log(JSON.stringify()))
+        tx.executeSql('select * from items', [], (_, { rows }) =>
+          console.log(JSON.stringify(rows))
         )
       },
       null,
       this.update
     )
+  }
+
+  clearLocalData = () => {
+    db.transaction(tx => {
+      tx.executeSql(
+        'drop table items;'
+        //'drop table items'
+      )
+      tx.executeSql(
+        'create table if not exists items (id integer primary key not null, value text);'
+        //'drop table items'
+      )
+
+    })
   }
 
   // ###########################CAMERA########################################################
@@ -139,20 +153,13 @@ async identifyImage(imageData){
       console.log(response.outputs[0].data.concepts[0].name)
     } catch(err) { alert(err) }
 
-    this.translate(temp_word);
+    await this.translate(temp_word);
 
-    console.log("nice 1\n");
-    //the switch case to add to db?
-    switch(this.state.identifedAs){
-      case "no person":
-        console.log("nice 2\n");
+    switch(this.state.identifedAs){ 
+      default:
         this.saveQuote();
         break;
-      default:
-        console.log("nice 3\n");
-        break;
     }
-    console.log("nice 4\n");
   };
 
   setImageIdentification(identifiedImage){
