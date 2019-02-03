@@ -11,24 +11,24 @@ class FiveBoxes extends React.Component {
   render(){
     return(
     <View>
-    <View style={{ backgroundColor:'blue',height:50}}>
-      <Text style={{ margin: 10, marginTop: 0, textAlign: 'right', color: '#828280', lineHeight: 24}}>
+    <View style={{ backgroundColor:'rgb(111, 207, 226)',height:50}}>
+      <Text style={{ margin: 10, marginTop: 0, textAlign: 'right', color: '#fff', lineHeight: 24}}>
       {this.props.arr[1]}</Text>
     </View>
-    <View style={{ backgroundColor:'blue',height:50}}>
-      <Text style={{ margin: 10, marginTop: 0, textAlign: 'right', color: '#828280', lineHeight: 24}}>
+    <View style={{ backgroundColor:'rgb(111, 207, 226)',height:50}}>
+      <Text style={{ margin: 10, marginTop: 0, textAlign: 'right', color: '#fff', lineHeight: 24}}>
       {this.props.arr[2]}</Text>
     </View>
-    <View style={{ backgroundColor:'blue',height:50}}>
-      <Text style={{ margin: 10, marginTop: 0, textAlign: 'right', color: '#828280', lineHeight: 24}}>
+    <View style={{ backgroundColor:'rgb(111, 207, 226)',height:50}}>
+      <Text style={{ margin: 10, marginTop: 0, textAlign: 'right', color: '#fff', lineHeight: 24}}>
       {this.props.arr[3]}</Text>
     </View>
-    <View style={{ backgroundColor:'blue',height:50}}>
-      <Text style={{ margin: 10, marginTop: 0, textAlign: 'right', color: '#828280', lineHeight: 24}}>
+    <View style={{ backgroundColor:'rgb(111, 207, 226)',height:50}}>
+      <Text style={{ margin: 10, marginTop: 0, textAlign: 'right', color: '#fff', lineHeight: 24}}>
       {this.props.arr[4]}</Text>
     </View>
-    <View style={{ backgroundColor:'blue',height:50}}>
-      <Text style={{ margin: 10, marginTop: 0, textAlign: 'right', color: '#828280', lineHeight: 24}}>
+    <View style={{ backgroundColor:'rgb(111, 207, 226)',height:50}}>
+      <Text style={{ margin: 10, marginTop: 0, textAlign: 'right', color: '#fff', lineHeight: 24}}>
       {this.props.arr[5 ]}</Text>
     </View>
     </View>
@@ -87,7 +87,8 @@ export default class UseCamera extends React.Component{
     identifedAs: '',
     loading: false,
     languageCode: 'en',
-    open: false,
+    openA: false,
+    openB: false,
     words: [""],
     quotes: [
       "Monkeys", 
@@ -266,6 +267,9 @@ async identifyImage(imageData){
     const temp = (
       <FiveBoxes arr={this.state.words}/>
     );
+    const temp_quotes = (
+      <FiveBoxes arr={this.state.quotes}/>
+    );
     //Drawer views
     // ############################DRAWER#######################################################
     const leftNavigationView = (
@@ -278,20 +282,21 @@ async identifyImage(imageData){
           justifyContent: 'center',
           alignItems: 'stretch',
         }}>
-          <View style={{flex:0.1, backgroundColor: 'powderblue'}}> 
+          <View style={{flex:0.1, backgroundColor: '#fff'}}> 
           </View>
-          <View style={{flex:0.6, backgroundColor: 'skyblue'}}> 
-            <TouchableOpacity              onPress={() => {
-                this.setState(prevState=> ({open: !prevState.open}))
+          <View style={{flex:0.3, backgroundColor: '#fff'}}> 
+            <Text style={{color:'rgb(111, 207, 226)',textAlign:'center', lineHeight:80}}>Famous Quotes</Text>
+            {temp_quotes} 
+          </View>
+            <View style={{flex:0.6, backgroundColor: '#fff'}}>
+              <TouchableOpacity              onPress={() => {
+                this.setState(prevState=> ({openA: !prevState.openA}))
               }}> 
-              <Text style={{textAlign:'center', lineHeight:80}}>Quote History</Text>
-            </TouchableOpacity>
-            {this.state.open && temp} 
+               <Text style={{color:'rgb(111, 207, 226)',textAlign:'center', lineHeight:80}}>Word History</Text>
+              </TouchableOpacity>
+              {this.state.openA && temp}
+            </View>
           </View>
-          <View style={{flex:0.3, backgroundColor: 'steelblue'}}>
-            <Text style={{textAlign:'center', lineHeight:80}}>Word History</Text>
-          </View>
-        </View>
       </View>
     );
 
@@ -307,6 +312,15 @@ async identifyImage(imageData){
         <TouchableOpacity onPress={() => { this.changeLanguage('fr') }}><Text style={styles.p}>French</Text></TouchableOpacity>
         <TouchableOpacity onPress={() => { this.changeLanguage('de') }}><Text style={styles.p}>German</Text></TouchableOpacity>
         <TouchableOpacity onPress={() => { this.changeLanguage('zh') }}><Text style={styles.p}>Chinese</Text></TouchableOpacity>
+        <View style={{flex:1 , flexDirection: 'column', justifyContent: 'flex-end',}}>
+          <Button 
+            onPress={
+              this.clearLocalData
+                }
+            title="Clear DB"
+            color='rgb(111, 207, 226)'
+          />
+        </View>
       </View>
     );
     //End Drawer views
