@@ -25,6 +25,7 @@ export default class UseCamera extends React.Component{
     identifedAs: '',
     loading: false,
     languageCode: 'en',
+    quotes: [],
   };
 
   // ###########################STORAGE########################################################
@@ -131,7 +132,17 @@ async identifyImage(imageData){
 
     await this.translate(temp_word);
 
-    switch(this.state.identifedAs){ 
+    switch(temp_word){ 
+      case 'no person':
+        var quote = "WOw"
+        if (this.state.quotes.includes(quote)===false) 
+          this.state.quotes.push(quote)
+        break;
+      case 'abstract':
+        var quote = "Dman"
+        if (this.state.quotes.includes(quote)===false) 
+          this.state.quotes.push(quote)
+        break;
       default:
         this.saveQuote();
         break;
@@ -179,8 +190,8 @@ async identifyImage(imageData){
         <Text style={{ margin: 10, fontSize: 15, textAlign: 'left' }}>
           I'm in the Drawer! LEFT
         </Text>
-        <Text style={{ margin: 20, fontSize: 13, textAlign: 'left'}}>
-          Hey!
+        <Text style={{ margin: 10, fontSize: 15, textAlign: 'left'}}>
+          {this.state.quotes[0]}
         </Text>
       </View>
     );
@@ -200,7 +211,12 @@ async identifyImage(imageData){
     //End Drawer views
 
     if (hasCameraPermission === null) {
-      return <Text>Asking camera permission</Text>;
+      return (
+        <View style={{flex:1}}>
+          <Text>Loading</Text>
+        </View>
+      );
+      // return <Text>Asking camera permission</Text>;
     } else if (hasCameraPermission === false) {
       return <Text>No access to camera</Text>;
     } else {
@@ -239,7 +255,7 @@ async identifyImage(imageData){
                 </View>
               </Camera>
             </View>
-          </DrawerLayoutAndroid>
+           </DrawerLayoutAndroid>
         </DrawerLayoutAndroid>
       );
     }
