@@ -3,9 +3,71 @@ import { AppRegistry, View, Dimensions, Button, Text, TouchableOpacity } from 'r
 import { Camera, Permissions } from 'expo';
 import axios from 'axios';
 import { DrawerLayoutAndroid, } from 'react-native-gesture-handler';
-import { SQLite } from 'expo'
+import { SQLite, Constants } from 'expo'
 
 const db = SQLite.openDatabase('myow.db')
+
+class FiveBoxes extends React.Component {
+  render(){
+    return(
+    <View>
+    <View style={{ backgroundColor:'blue',height:50}}>
+      <Text style={{ margin: 10, marginTop: 0, textAlign: 'right', color: '#828280', lineHeight: 24}}>
+      {this.props.arr[1]}</Text>
+    </View>
+    <View style={{ backgroundColor:'blue',height:50}}>
+      <Text style={{ margin: 10, marginTop: 0, textAlign: 'right', color: '#828280', lineHeight: 24}}>
+      {this.props.arr[2]}</Text>
+    </View>
+    <View style={{ backgroundColor:'blue',height:50}}>
+      <Text style={{ margin: 10, marginTop: 0, textAlign: 'right', color: '#828280', lineHeight: 24}}>
+      {this.props.arr[3]}</Text>
+    </View>
+    <View style={{ backgroundColor:'blue',height:50}}>
+      <Text style={{ margin: 10, marginTop: 0, textAlign: 'right', color: '#828280', lineHeight: 24}}>
+      {this.props.arr[4]}</Text>
+    </View>
+    <View style={{ backgroundColor:'blue',height:50}}>
+      <Text style={{ margin: 10, marginTop: 0, textAlign: 'right', color: '#828280', lineHeight: 24}}>
+      {this.props.arr[5 ]}</Text>
+    </View>
+    </View>
+    )
+  }
+}
+
+class LoadingScreen extends React.Component {
+  render() {
+    return (
+      // Try setting `justifyContent` to `center`.
+      // Try setting `flexDirection` to `row`.
+      <View style={{
+        flex: 1,
+      }}>
+        <View style={{
+          flex: 1,
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'stretch',
+        }}>
+          <View style={{flex:0.1, backgroundColor: 'powderblue'}}> 
+          </View>
+          <View style={{flex:0.6, backgroundColor: 'skyblue'}}> 
+            <TouchableOpacity              onPress={() => {
+                this.setState(prevState=> ({open: !prevState.open}))
+              }}> 
+              <Text style={{textAlign:'center', lineHeight:80}}>Quote History</Text>
+            </TouchableOpacity>
+            {this.state.open && temp} 
+          </View>
+          <View style={{flex:0.3, backgroundColor: 'steelblue'}}>
+            <Text style={{textAlign:'center', lineHeight:80}}>Word History</Text>
+          </View>
+        </View>
+      </View>
+    );
+  }
+}
 
 // ############################################################################################
 //                                          API KEYS
@@ -27,11 +89,16 @@ export default class UseCamera extends React.Component{
     languageCode: 'en',
     open: false,
     words: [""],
+<<<<<<< Updated upstream
     quotes: [
       "Monkeys", 
       "Chimps",
       "Kai25"
     ],
+=======
+    quotes: [""],
+    open:false,
+>>>>>>> Stashed changes
   };
 
   // ###########################STORAGE########################################################
@@ -138,9 +205,17 @@ async identifyImage(imageData){
 
     await this.translate(word);
 
+    console.log("this.state.words.length : ",this.state.words.length)
+    if(this.state.words.length === 6){
+      console.log("this.state.words.length === 6 : need to remove")
+      var temp_array = [...this.state.words]
+      temp_array.splice(1,1)
+      this.setState(prevState => ({ words: temp_array}))
+    }
     this.setState(prevState => ({
       words: [...prevState.words, word + ' - ' + this.state.identifedAs]
     }));
+    console.log("this.state.words.length : ",this.state.words.length)
 
     // switch(word){ 
     //   case 'no person':
@@ -192,10 +267,36 @@ async identifyImage(imageData){
 
   render(){
     const { hasCameraPermission } = this.state;
-    
+    const temp = (
+      <FiveBoxes arr={this.state.words}/>
+    );
     //Drawer views
     // ############################DRAWER#######################################################
     const leftNavigationView = (
+      <View style={{
+        flex: 1,
+      }}>
+        <View style={{
+          flex: 1,
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'stretch',
+        }}>
+          <View style={{flex:0.1, backgroundColor: 'powderblue'}}> 
+          </View>
+          <View style={{flex:0.6, backgroundColor: 'skyblue'}}> 
+            <TouchableOpacity              onPress={() => {
+                this.setState(prevState=> ({open: !prevState.open}))
+              }}> 
+              <Text style={{textAlign:'center', lineHeight:80}}>Quote History</Text>
+            </TouchableOpacity>
+            {this.state.open && temp} 
+          </View>
+          <View style={{flex:0.3, backgroundColor: 'steelblue'}}>
+            <Text style={{textAlign:'center', lineHeight:80}}>Word History</Text>
+          </View>
+        </View>
+      </View>
     );
 
     const rightNavigationView = (
