@@ -6,30 +6,7 @@ import { ViewPagerAndroid, DrawerLayoutAndroid, } from 'react-native-gesture-han
 import { SQLite } from 'expo'
 import { white } from 'ansi-colors';
 
-const db = SQLite.openDatabase('myow.db')
-
-class LoadingScreen extends Component {
-  render() {
-    return (
-      // Try setting `justifyContent` to `center`.
-      // Try setting `flexDirection` to `row`.
-      <View style={{
-        flex: 1,
-      }}>
-        <View style={{
-          flex: 1,
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'stretch',
-        }}>
-          <View style={{width: 50, height: 50, backgroundColor: 'powderblue'}} />
-          <View style={{width: 50, height: 50, backgroundColor: 'skyblue'}} />
-          <View style={{height: 50, backgroundColor: 'steelblue'}} />
-        </View>
-      </View>
-    );
-  }
-};
+const db = SQLite.openDatabase('db.db')
 
 // ############################################################################################
 //                                          API KEYS
@@ -46,9 +23,10 @@ export default class UseCamera extends React.Component{
     hasCameraPermission: null,
     direction: Camera.Constants.Type.back,
     ratio: this.setAppropriateRatio(),
-    identifedAs: 'wadksodjlsak',
+    identifedAs: '',
     loading: false,
     languageCode: 'en',
+    quotes: [],
   };
 
   // ###########################STORAGE########################################################
@@ -155,7 +133,17 @@ async identifyImage(imageData){
 
     await this.translate(temp_word);
 
-    switch(this.state.identifedAs){ 
+    switch(temp_word){ 
+      case 'no person':
+        var quote = "WOw"
+        if (this.state.quotes.includes(quote)===false) 
+          this.state.quotes.push(quote)
+        break;
+      case 'abstract':
+        var quote = "Dman"
+        if (this.state.quotes.includes(quote)===false) 
+          this.state.quotes.push(quote)
+        break;
       default:
         this.saveQuote();
         break;
@@ -182,7 +170,7 @@ async identifyImage(imageData){
         q: temp_word, //this.state.identifedAs 
         target: this.state.languageCode //this.state.languageCode
         })
-      console.log(JSON.stringify(response))
+      // console.log(JSON.stringify(response))
       console.log(response.data.data.translations[0].translatedText)
       console.log(response.data.data.translations[0].detectedSourceLanguage)
       this.setState((prevState, props) => ({
@@ -205,7 +193,7 @@ async identifyImage(imageData){
           I'm in the Drawer! LEFT
         </Text>
         <Text style={{ margin: 10, fontSize: 15, textAlign: 'left'}}>
-          Hey!
+          {this.state.quotes[0]}
         </Text>
       </View>
     );
@@ -226,7 +214,7 @@ async identifyImage(imageData){
     if (hasCameraPermission === null) {
       return (
         <View style={{flex:1}}>
-          <LoadingScreen/>
+          <Text>Loading</Text>
         </View>
       );
     } else if (hasCameraPermission === false) {
@@ -271,7 +259,7 @@ async identifyImage(imageData){
                 </View>
               </Camera>
             </View>
-          </DrawerLayoutAndroid>
+           </DrawerLayoutAndroid>
         </DrawerLayoutAndroid>
       );
     }
