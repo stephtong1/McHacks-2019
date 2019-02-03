@@ -25,7 +25,7 @@ export default class UseCamera extends React.Component{
     identifedAs: '',
     loading: false,
     languageCode: 'en',
-    quotes: [],
+    quotes: [""],
   };
 
   // ###########################STORAGE########################################################
@@ -117,7 +117,7 @@ export default class UseCamera extends React.Component{
 
 async identifyImage(imageData){
     //local word
-    let temp_word = "";
+    let word = "";
     // Initialise the Clarifai api
     const Clarifai = require('clarifai');
     const app = new Clarifai.App({
@@ -126,27 +126,31 @@ async identifyImage(imageData){
     // Identify the image
     try{
       response = await app.models.predict(Clarifai.GENERAL_MODEL, {base64: imageData})
-      temp_word = response.outputs[0].data.concepts[0].name
+      word = response.outputs[0].data.concepts[0].name
       console.log(response.outputs[0].data.concepts[0].name)
     } catch(err) { alert(err) }
 
-    await this.translate(temp_word);
+    await this.translate(word);
 
-    switch(temp_word){ 
-      case 'no person':
-        var quote = "WOw"
-        if (this.state.quotes.includes(quote)===false) 
-          this.state.quotes.push(quote)
-        break;
-      case 'abstract':
-        var quote = "Dman"
-        if (this.state.quotes.includes(quote)===false) 
-          this.state.quotes.push(quote)
-        break;
-      default:
-        this.saveQuote();
-        break;
-    }
+    this.setState(prevState => ({
+      quotes: [...prevState.quotes, word]
+    }));
+
+    // switch(word){ 
+    //   case 'no person':
+    //     var quote = "WOw"
+    //     if (this.state.quotes.includes(quote)===false) 
+    //       this.state.quotes.push(quote)
+    //     break;
+    //   case 'abstract':
+    //     var quote = "Dman"
+    //     if (this.state.quotes.includes(quote)===false) 
+    //       this.state.quotes.push(quote)
+    //     break;
+    //   default:
+    //     this.saveQuote();
+    //     break;
+    // }
   };
 
   setImageIdentification(identifiedImage){
@@ -187,21 +191,55 @@ async identifyImage(imageData){
     // ############################DRAWER#######################################################
     const leftNavigationView = (
       <View style={{ flex: 1, backgroundColor: '#fff' }}>
-        <Text style={{ margin: 10, fontSize: 15, textAlign: 'left' }}>
-          I'm in the Drawer! LEFT
-        </Text>
-        <Text style={{ margin: 10, fontSize: 15, textAlign: 'left'}}>
-          {this.state.quotes[0]}
-        </Text>
+
+        {/* WORDS */}
+        <View style={{backgroundColor: 'rgb(111, 207, 226)'}}>
+          <Text style={{ margin: 10, marginTop: 100, fontSize: 23, textAlign: 'right', 
+            color: 'rgb(255, 255, 255)'}}>         
+            Words history
+          </Text>
+        </View>
+        <View>
+        {this.state.quotes.map( (word, key) => {
+          return (
+            <Text style={{ margin: 10, marginTop: 0, textAlign: 'right', color: '#828280', lineHeight: 24}}
+              key={key}>
+              {word}
+            </Text>
+          )
+        })}
+        </View>
+
+        {/* QUOTES */}
+        <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, 
+          justifyContent: 'center', alignItems: 'stretch', 
+          textAlign: 'right'}}>
+          <Text style={{ margin: 10, marginTop: 100, fontSize: 23, textAlign: 'right', 
+            color: 'rgb(111, 207, 226)'}}>         
+            Acquired quotes
+          </Text>
+        </View>
+        <View>
+        {this.state.quotes.map( (word, key) => {
+          return (
+            <Text style={{ margin: 10, marginTop: 0, textAlign: 'right', color: '#828280', lineHeight: 24}}
+              key={key}>
+              {word}
+            </Text>
+          )
+        })}
+        </View>
       </View>
     );
 
     const rightNavigationView = (
       <View style={{ flex: 1, backgroundColor: '#fff' }}>
-        <Text style={{ margin: 10, marginTop: 100, fontSize: 23, textAlign: 'left', 
-          backgroundColor: 'rgb(111, 207, 226)', color: 'rgb(255, 255, 255)'}}>
-          Language menu
-        </Text>
+        <View style={{backgroundColor: 'rgb(111, 207, 226)'}}>
+          <Text style={{ margin: 10, marginTop: 100, fontSize: 23, textAlign: 'left', 
+            color: 'rgb(255, 255, 255)'}}>
+            Language menu
+          </Text>
+        </View>
         <TouchableOpacity onPress={() => { this.changeLanguage('en') }}><Text style={styles.p}>English</Text></TouchableOpacity>
         <TouchableOpacity onPress={() => { this.changeLanguage('fr') }}><Text style={styles.p}>French</Text></TouchableOpacity>
         <TouchableOpacity onPress={() => { this.changeLanguage('de') }}><Text style={styles.p}>German</Text></TouchableOpacity>
@@ -250,7 +288,7 @@ async identifyImage(imageData){
                       this.takePicture
                         }
                     title="Snap!"
-                    color="#841584"
+                    color='rgb(111, 207, 226)'
                   />
                 </View>
               </Camera>
@@ -272,11 +310,4 @@ const styles =  {
       lineHeight: 24,
       margin: 10
   },
-  languageBar: {
-      flexDirection: 'row',
-      justifyContent: 'space-between'
-  },
-  page:{
-    backgroundColor: '#FAFAFA',
-  }
 }
