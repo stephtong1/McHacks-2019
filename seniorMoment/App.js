@@ -25,6 +25,7 @@ export default class UseCamera extends React.Component{
     identifedAs: '',
     loading: false,
     languageCode: 'en',
+    words: [""],
     quotes: [""],
   };
 
@@ -133,7 +134,7 @@ async identifyImage(imageData){
     await this.translate(word);
 
     this.setState(prevState => ({
-      quotes: [...prevState.quotes, word]
+      words: [...prevState.words, word + ' - ' + this.state.identifedAs]
     }));
 
     // switch(word){ 
@@ -200,7 +201,7 @@ async identifyImage(imageData){
           </Text>
         </View>
         <View>
-        {this.state.quotes.map( (word, key) => {
+        {this.state.words.map( (word, key) => {
           return (
             <Text style={{ margin: 10, marginTop: 0, textAlign: 'right', color: '#828280', lineHeight: 24}}
               key={key}>
@@ -214,20 +215,22 @@ async identifyImage(imageData){
         <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, 
           justifyContent: 'center', alignItems: 'stretch', 
           textAlign: 'right'}}>
-          <Text style={{ margin: 10, marginTop: 100, fontSize: 23, textAlign: 'right', 
-            color: 'rgb(111, 207, 226)'}}>         
-            Acquired quotes
-          </Text>
-        </View>
-        <View>
-        {this.state.quotes.map( (word, key) => {
-          return (
-            <Text style={{ margin: 10, marginTop: 0, textAlign: 'right', color: '#828280', lineHeight: 24}}
-              key={key}>
-              {word}
+          <View>
+            <Text style={{ margin: 10, marginTop: 100, fontSize: 23, textAlign: 'right', 
+              color: 'rgb(111, 207, 226)'}}>         
+              Acquired quotes
             </Text>
-          )
-        })}
+          </View>
+          <View>
+          {this.state.quotes.map( (word, key) => {
+            return (
+              <Text style={{ margin: 10, marginTop: 0, textAlign: 'right', color: '#828280', lineHeight: 24}}
+                key={key}>
+                {word}
+              </Text>
+            )
+          })}
+          </View>
         </View>
       </View>
     );
