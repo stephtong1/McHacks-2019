@@ -190,44 +190,37 @@ async identifyImage(imageData){
     //Drawer views
     // ############################DRAWER#######################################################
     const leftNavigationView = (
-      <View style={{ flex: 1, backgroundColor: '#fff' }}>
-
-        {/* WORDS */}
-        <View style={{backgroundColor: 'rgb(111, 207, 226)'}}>
-          <Text style={{ margin: 10, marginTop: 100, fontSize: 23, textAlign: 'right', 
-            color: 'rgb(255, 255, 255)'}}>         
-            Words history
-          </Text>
-        </View>
-        <View>
-        {this.state.quotes.map( (word, key) => {
-          return (
-            <Text style={{ margin: 10, marginTop: 0, textAlign: 'right', color: '#828280', lineHeight: 24}}
-              key={key}>
-              {word}
+      <View>
+        <View style={{height:Dimensions.get('window').height / 2,backgroundColor: '#fff' }}>
+          {/* WORDS */}
+          <View style={{flex:1, backgroundColor: 'rgb(111, 207, 226)',margin: 10, marginTop: 100}}>
+            <Text style={{fontSize: 23, textAlign: 'right', 
+              color: 'rgb(255, 255, 255)'}}>         
+              Words history
             </Text>
-          )
-        })}
+          </View>
+          <View style={{flex:1, margin:10}}>
+              <Text style={{textAlign: 'right', color: '#828280', lineHeight: 24}}
+                >
+                word
+              </Text>
+          </View>
         </View>
-
-        {/* QUOTES */}
-        <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, 
-          justifyContent: 'center', alignItems: 'stretch', 
-          textAlign: 'right'}}>
-          <Text style={{ margin: 10, marginTop: 100, fontSize: 23, textAlign: 'right', 
-            color: 'rgb(111, 207, 226)'}}>         
-            Acquired quotes
-          </Text>
-        </View>
-        <View>
-        {this.state.quotes.map( (word, key) => {
-          return (
-            <Text style={{ margin: 10, marginTop: 0, textAlign: 'right', color: '#828280', lineHeight: 24}}
-              key={key}>
-              {word}
+        <View style={{height:Dimensions.get('window').height / 2,backgroundColor: '#fff' }}>
+          {/* QUOTES */}
+          <View style={{flex:1,
+            textAlign: 'right'}}>
+            <Text style={{ margin: 10, marginTop: 100, fontSize: 23, textAlign: 'right', 
+              color: 'rgb(111, 207, 226)'}}>         
+              Acquired quotes
             </Text>
-          )
-        })}
+          </View>
+          <View style={{flex:1}}>
+              <Text style={{margin: 10, textAlign: 'right', color: '#828280', lineHeight: 24}}
+                >
+                word
+              </Text>
+          </View>
         </View>
       </View>
     );
