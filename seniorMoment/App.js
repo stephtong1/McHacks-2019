@@ -25,8 +25,13 @@ export default class UseCamera extends React.Component{
     identifedAs: '',
     loading: false,
     languageCode: 'en',
+    open: false,
     words: [""],
-    quotes: [""],
+    quotes: [
+      "Monkeys", 
+      "Chimps",
+      "Kai25"
+    ],
   };
 
   // ###########################STORAGE########################################################
@@ -187,7 +192,7 @@ async identifyImage(imageData){
 
   render(){
     const { hasCameraPermission } = this.state;
-
+    
     //Drawer views
     // ############################DRAWER#######################################################
     const leftNavigationView = (
@@ -216,20 +221,29 @@ async identifyImage(imageData){
           justifyContent: 'center', alignItems: 'stretch', 
           textAlign: 'right'}}>
           <View>
-            <Text style={{ margin: 10, marginTop: 100, fontSize: 23, textAlign: 'right', 
+            {/* <Text style={{ margin: 10, marginTop: 100, fontSize: 23, textAlign: 'right', 
               color: 'rgb(111, 207, 226)'}}>         
               Acquired quotes
-            </Text>
-          </View>
-          <View>
-          {this.state.quotes.map( (word, key) => {
-            return (
-              <Text style={{ margin: 10, marginTop: 0, textAlign: 'right', color: '#828280', lineHeight: 24}}
-                key={key}>
-                {word}
+            </Text> */}
+            <TouchableOpacity
+              onPress={() => {
+                this.setState( prevState => ({
+                  open: !prevState.open
+                }))
+              }}>
+              <Text style={{ margin: 10, marginTop: 100, fontSize: 23, textAlign: 'right', 
+                color: 'rgb(111, 207, 226)'}}>         
+                Acquired quotes
               </Text>
-            )
-          })}
+              {this.state.open && this.state.quotes.map( (quote, key) => {
+                return (
+                  <Text style={{ margin: 10, marginTop: 0, textAlign: 'right', color: '#828280', lineHeight: 24}}
+                    key={key}>
+                    {quote}
+                  </Text>
+                )
+              })}
+            </TouchableOpacity>
           </View>
         </View>
       </View>
