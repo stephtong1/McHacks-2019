@@ -12,5 +12,5 @@ If you're able to trigger green related words by snapping (such as water bottle)
 Here is the link if you wish to install the "Expo" app to see the demo of it by scanning the QR code!
 https://exp.host/@munshi/seniorMoment
 #
-#Devpost link:
+# Devpost link:
 https://devpost.com/software/mchacks-2019
