@@ -1,7 +1,7 @@
 # McHacks-2019
 
 # Senior Moment
-If you forgot the word, forgot how to say in french, got a senior moment? This is the app for you! 
+Ever forgot the word, forgot how to say in french, got a senior moment? This is the app for you! 
 
 On a serious note, if you forgot the word of an object in front of you in a foreign language, and you're an English speaking living in a multicultural city, then this app will find you the exact word. 
 
